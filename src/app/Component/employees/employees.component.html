@@ -1,0 +1,64 @@
+<div class="main-content">
+  <!-- Filter Section -->
+  <div class="filter-section">
+    <input
+      type="text"
+      placeholder="Search by name or email..."
+      [(ngModel)]="searchTerm"
+      (input)="filterEmployees()"
+    />
+    <select [(ngModel)]="positionFilter" (change)="filterEmployees()">
+      <option value="">All Positions</option>
+      <option *ngFor="let position of positions" [value]="position">{{ position }}</option>
+    </select>
+    <select [(ngModel)]="departmentFilter" (change)="filterEmployees()">
+      <option value="">All Departments</option>
+      <option *ngFor="let dept of departments" [value]="dept.name">{{ dept.name }}</option>
+    </select>
+    <button class="clear-filters-btn" (click)="clearFilters()">Clear Filters</button>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="loading-spinner" *ngIf="isLoading"></div>
+
+  <!-- Main Card -->
+  <div class="card" *ngIf="!isLoading">
+    <div class="card-header">
+      <h4 class="mb-0">👥 Employee Management</h4>
+      <button class="open-form-btn" (click)="openCreateDialog()">
+        <i class="fas fa-plus me-2"></i> Add Employee
+      </button>
+    </div>
+
+    <div class="card-body">
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4" *ngFor="let employee of filteredEmployees">
+          <div class="employee-card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ employee.Firstname }} {{ employee.Lastname }}</h5>
+              <p><i class="fas fa-envelope me-2"></i>{{ employee.Email }}</p>
+              <p><i class="fas fa-phone me-2"></i>{{ employee.Telephone }}</p>
+              <p><i class="fas fa-briefcase me-2"></i>{{ employee.Poste }}</p>
+              <p><i class="fas fa-building me-2"></i>{{ employee.Department }}</p>
+              <div class="button-group">
+                <button class="btn btn-outline-secondary" (click)="openEditDialog(employee)">
+                  <i class="fas fa-edit me-1"></i> Edit
+                </button>
+                <button class="btn btn-outline-primary" (click)="viewPerformance(employee.Id)">
+                  <i class="fas fa-chart-line me-1"></i> Performance
+                </button>
+                <button class="btn btn-outline-danger" (click)="deleteEmployee(employee.Id)">
+                  <i class="fas fa-trash-alt me-1"></i> Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <small>Showing {{ filteredEmployees.length }} of {{ employees.length }} employees</small>
+    </div>
+  </div>
+</div>

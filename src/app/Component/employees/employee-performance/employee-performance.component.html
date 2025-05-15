@@ -1,0 +1,133 @@
+<div class="container-fluid py-4 dashboard-container">
+  <div class="card shadow mb-4">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">
+        <span *ngIf="employee">Performance Dashboard: {{employee.firstname}} {{employee.lastname}}</span>
+        <span *ngIf="!employee && !errorMessage">Loading...</span>
+      </h3>
+      <button class="btn btn-light" (click)="goBack()">
+        <a [routerLink]="['/']" class="explore-link">Back to Employees</a>
+        <i class="fas fa-arrow-left me-2"></i>Back to Employees
+      </button>
+    </div>
+
+    <div class="card-body">
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="text-center py-5 loading-container">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3">Loading employee performance data...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center justify-content-between">
+        <span>{{errorMessage}}</span>
+        <button class="btn btn-sm btn-outline-danger" (click)="loadEmployeeData()">
+          <i class="fas fa-sync-alt me-1"></i>Retry
+        </button>
+      </div>
+
+      <!-- Content -->
+      <div *ngIf="employee && !isLoading && !errorMessage">
+        <!-- Position Badge -->
+        <div class="mb-4 position-badge">
+          <span class="badge bg-info text-dark">
+            <i class="fas fa-briefcase me-1"></i>{{employee.poste}}
+          </span>
+        </div>
+
+        <!-- Attendance Section -->
+        <section class="section mb-5">
+          <h4 class="section-title mb-4"><i class="fas fa-calendar-check me-2"></i>Attendance Metrics</h4>
+          <div class="row">
+            <div class="col-md-6 chart-card">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Presence/Absence</h5>
+                  <div class="chart-wrapper">
+                    <canvas id="attendanceChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Task Performance Section -->
+        <section class="section mb-5">
+          <h4 class="section-title mb-4"><i class="fas fa-tasks me-2"></i>Task Performance</h4>
+          <div class="row">
+            <div class="col-md-6 chart-card">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Tasks Completion</h5>
+                  <div class="chart-wrapper">
+                    <canvas id="taskCompletionChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 chart-card">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Task Quality Ratings</h5>
+                  <div class="chart-wrapper">
+                    <canvas id="qualityRatingChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Additional Metrics -->
+        <section class="section mb-5">
+          <h4 class="section-title mb-4"><i class="fas fa-chart-line me-2"></i>Additional Metrics</h4>
+          <div class="row">
+            <div class="col-md-6 chart-card">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Productivity Trend</h5>
+                  <div class="chart-wrapper">
+                    <canvas id="productivityChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 chart-card">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Peer Comparison</h5>
+                  <div class="chart-wrapper">
+                    <canvas id="peerComparisonChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 chart-card">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Skill Matrix</h5>
+                  <div class="chart-wrapper">
+                    <canvas id="skillMatrixChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 chart-card">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Trend Chart</h5>
+                  <div class="chart-wrapper">
+                    <canvas id="trendChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

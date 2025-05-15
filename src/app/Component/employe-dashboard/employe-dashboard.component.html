@@ -1,0 +1,317 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                try {
+                    if (typeof feather !== 'undefined') {
+                        feather.replace();
+                        console.log('Feather Icons initialized successfully');
+                    } else {
+                        console.error('Feather Icons library not loaded');
+                    }
+                } catch (error) {
+                    console.error('Error initializing Feather Icons:', error);
+                }
+            }, 500);
+
+            const sidebar = document.querySelector('.sidebar');
+            const toggleBtn = document.querySelector('.sidebar-mini-btn');
+            
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    sidebar.classList.toggle('mini');
+                    if (window.innerWidth <= 992) {
+                        sidebar.classList.toggle('active');
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="sidebar px-4 py-4 py-md-4 me-0">
+        <div class="d-flex flex-column h-100">
+            <!-- Logo -->
+            <div class="mb-0 brand-icon">
+                <span class="logo-icon">
+                    <svg width="35" height="35" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                </span>
+                <span class="logo-text">Espace Employé</span>
+            </div>
+
+            <!-- Menu List -->
+            <ul class="menu-list flex-grow-1 mt-3">
+                <li><a class="m-link active" href=""><i data-feather="home"></i><span>Tableau de Bord</span></a></li>
+                <li><a class="m-link" href="profile"><i data-feather="user"></i><span>Mon Profil</span></a></li>
+                <li><a class="m-link" href="tasks"><i data-feather="check-circle"></i><span>Mes Tâches</span></a></li>
+                <li><a class="m-link" href="documents"><i data-feather="file-text"></i><span>Documents RH</span></a></li>
+                <li><a class="m-link" href="performance"><i data-feather="trending-up"></i><span>Ma Performance</span></a></li>
+                <li><a class="m-link" href="wellbeing"><i data-feather="heart"></i><span>Bien-être</span></a></li>
+                <li><a class="m-link" href="surveys"><i data-feather="clipboard"></i><span>Sondages</span></a></li>
+            </ul>
+
+            <!-- Sign Out Button -->
+            <button type="button" class="btn btn-link sidebar-mini-btn" (click)="logout()">
+                <i data-feather="log-out"></i><span class="ms-2">Déconnexion</span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="main px-lg-4 px-md-4">
+        <div class="header">
+          <nav class="navbar py-4">
+            <div class="container-xxl">
+              <!-- Header rightbar icon -->
+              <div class="h-right d-flex align-items-center mr-5 mr-lg-0 order-1">
+                <!-- Notifications Dropdown -->
+                <div class="dropdown notifications zindex-popover">
+                  <a class="nav-link dropdown-toggle pulse" href="#" role="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-bell fs-5"></i>
+                    <span class="pulse-ring"></span>
+                  </a>
+                  <div id="NotificationsDiv" class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-sm-end p-0 m-0">
+                    <div class="card border-0 w380">
+                      <div class="card-header border-0 p-3">
+                        <h5 class="mb-0 font-weight-light d-flex justify-content-between">
+                          <span>Notifications</span>
+                          <span class="badge text-white">{{notificationCount}}</span>
+                        </h5>
+                      </div>
+                      <div class="tab-content card-body">
+                        <div class="tab-pane fade show active">
+                          <ul class="list-unstyled list mb-0">
+                            <li class="py-2 mb-1 border-bottom" *ngFor="let notification of notifications">
+                              <a href="javascript:void(0);" class="d-flex">
+                                <div class="flex-fill ms-2">
+                                  <p class="d-flex justify-content-between mb-0">
+                                    <span class="font-weight-bold">{{notification.title}}</span>
+                                    <small>{{notification.time}}</small>
+                                  </p>
+                                  <span>{{notification.message}}</span>
+                                </div>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <a class="card-footer text-center border-top-0" href="#">Voir toutes les notifications</a>
+                    </div>
+                  </div>
+                </div>
+      
+                <!-- Profile Dropdown -->
+                <div class="dropdown profile zindex-popover ms-3">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    <span class="avatar rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                      {{ userName ? (userName.charAt(0) | uppercase) : 'E' }}
+                    </span>
+                  </a>
+                  <div class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-sm-end p-0 m-0">
+                    <div class="card border-0">
+                      <div class="card-header border-0 p-3">
+                        <div class="d-flex align-items-center">
+                          <span class="avatar rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                            {{ userName ? (userName.charAt(0) | uppercase) : 'E' }}
+                          </span>
+                          <div>
+                            <h5 class="mb-0">{{ userName || 'Employé' }}</h5>
+                            <small>{{ userPosition || 'Poste' }}</small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body p-0">
+                        <ul class="list-unstyled list mb-0">
+                          <li>
+                            <a routerLink="/profile" class="dropdown-item py-2">Mon Profil</a>
+                          </li>
+                          <li>
+                            <a routerLink="/settings" class="dropdown-item py-2">Paramètres</a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);" class="dropdown-item py-2" (click)="logout()">Déconnexion</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="body d-flex py-3">
+            <div class="container-xxl">
+                <div class="row g-3">
+                    <!-- Welcome Card -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <h5 class="card-title mb-1">Bienvenue, {{userName}}!</h5>
+                                        <p class="mb-0 text-muted">Voici votre tableau de bord personnel</p>
+                                    </div>
+                                    <div class="avatar bg-light-primary p-2">
+                                        <i data-feather="sun" class="feather-24"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar bg-light-info p-2">
+                                        <i data-feather="check-circle" class="feather-24"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h6 class="mb-0">Tâches en cours</h6>
+                                        <h4 class="mb-0">{{taskCount}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar bg-light-success p-2">
+                                        <i data-feather="calendar" class="feather-24"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h6 class="mb-0">Jours de congé restants</h6>
+                                        <h4 class="mb-0">{{leaveDays}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar bg-light-warning p-2">
+                                        <i data-feather="trending-up" class="feather-24"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h6 class="mb-0">Score de performance</h6>
+                                        <h4 class="mb-0">{{performanceScore}}/10</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Current Tasks -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
+                                <h6 class="m-0 fw-bold">Mes Tâches Récentes</h6>
+                                <a href="tasks" class="btn btn-sm btn-link">Voir tout</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0">
+                                        <tbody>
+                                            <tr *ngFor="let task of recentTasks">
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" [checked]="task.completed" (change)="toggleTask(task.id)">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <h6 class="mb-0">{{task.title}}</h6>
+                                                    <small class="text-muted">{{task.dueDate | date}}</small>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-{{task.priorityClass}}">{{task.priority}}</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Wellbeing Survey -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
+                                <h6 class="m-0 fw-bold">Sondage Bien-être</h6>
+                                <span class="badge bg-primary">Nouveau</span>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Votre avis compte! Répondez à notre sondage sur le bien-être au travail.</p>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-success" role="progressbar" [style.width]="surveyCompletion + '%'" [attr.aria-valuenow]="surveyCompletion" aria-valuemin="0" aria-valuemax="100"></div>                                </div>
+                                <a href="surveys" class="btn btn-primary">Répondre au sondage</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Performance Overview -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
+                                <h6 class="m-0 fw-bold">Aperçu de ma Performance</h6>
+                                <a href="performance" class="btn btn-sm btn-link">Détails</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <h4 class="mb-1">{{attendancePercentage}}%</h4>
+                                            <p class="mb-0 text-muted">Présence</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <h4 class="mb-1">{{taskCompletion}}%</h4>
+                                            <p class="mb-0 text-muted">Tâches complétées</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <h4 class="mb-1">{{qualityScore}}/5</h4>
+                                            <p class="mb-0 text-muted">Qualité du travail</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <h4 class="mb-1">{{productivityScore}}%</h4>
+                                            <p class="mb-0 text-muted">Productivité</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <canvas id="performanceChart" height="100"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <main class="page-content">
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</body>

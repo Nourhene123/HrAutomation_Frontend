@@ -1,0 +1,196 @@
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+  }
+  
+  .brand-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .logo-text {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .menu-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .menu-list li {
+    margin-bottom: 10px;
+  }
+  
+  .m-link {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .m-link:hover, .m-link.active {
+    background-color: #3498db;
+  }
+  
+  .sidebar-mini-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .main {
+    flex: 1;
+    padding: 20px;
+    background-color: #f5f7fa;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+  .h-right {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .notifications, .profile {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .notifications span, .profile span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    right: 0;
+    top: 100%;
+    min-width: 200px;
+    z-index: 1;
+  }
+  
+  .notifications:hover .dropdown-content, .profile:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown-content ul {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+  }
+  
+  .dropdown-content li {
+    padding: 5px 0;
+  }
+  
+  .welcome-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+  }
+  
+  .welcome-card h5 {
+    margin: 0;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .survey-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .survey-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .survey-header h3 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #2c3e50;
+  }
+  
+  .survey-details p {
+    margin: 5px 0;
+    font-size: 1em;
+    color: #34495e;
+  }
+  
+  .survey-details p strong {
+    color: #7f8c8d;
+  }
+  
+  .action-buttons {
+    margin-top: 10px;
+  }
+  
+  .respond-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .respond-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .alert {
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .alert-info {
+    background-color: #e1f0fa;
+    color: #2b6cb0;
+  }
+  
+  .alert-danger {
+    background-color: #fceaea;
+    color: #c0392b;
+  }

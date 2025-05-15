@@ -1,0 +1,165 @@
+<head>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add a slight delay to ensure Angular has rendered the DOM
+            setTimeout(() => {
+                try {
+                    if (typeof feather !== 'undefined') {
+                        feather.replace();
+                        console.log('Feather Icons initialized successfully');
+                    } else {
+                        console.error('Feather Icons library not loaded');
+                    }
+                } catch (error) {
+                    console.error('Error initializing Feather Icons:', error);
+                }
+            }, 500); // 500ms delay to allow Angular to render
+
+            // Sidebar toggle functionality
+            const sidebar = document.querySelector('.sidebar');
+            const toggleBtn = document.querySelector('.sidebar-mini-btn');
+            
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    sidebar.classList.toggle('mini');
+                    if (window.innerWidth <= 992) {
+                        sidebar.classList.toggle('active');
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="sidebar px-4 py-4 py-md-4 me-0">
+        <div class="d-flex flex-column h-100">
+            <!-- Logo -->
+            <!-- Fixed missing closing quotation mark -->
+            <div class="mb-0 brand-icon">
+                <span class="logo-icon">
+                    <svg width="35" height="35" fill="currentColor" class="bi bi-app-indicator" viewBox="0 0 16 16">
+                        <path d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1H5.5z"/>
+                        <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                    </svg>
+                </span>
+                <span class="logo-text">HR Dashboard</span>
+            </div>
+
+            <!-- Menu List -->
+            <ul class="menu-list flex-grow-1 mt-3">
+                <li><a class="m-link active" href=""><i data-feather="home"></i><span>Dashboard</span></a></li>
+                <!-- Fixed typo in "Condidates" to "Candidates" -->
+                <li><a class="m-link" href="Departmentlist"><i data-feather="book-open"></i><span>Department Details</span></a></li>
+                <li><a class="m-link" href="Employees"><i data-feather="users"></i><span>Employee Performance</span></a></li>
+                
+                <li><a class="m-link" href="survey-list"><i data-feather="file-text"></i><span>survey-list</span></a></li>
+                <li><a class="m-link" href="JobOffers"><i data-feather="briefcase"></i><span>Job Offers</span></a></li>
+                <li><a class="m-link" href="survey-list"><i data-feather="briefcase"></i><span>Survey</span></a></li>
+            </ul>
+
+            <!-- Sign Out Button -->
+                <button type="button" class="btn btn-link sidebar-mini-btn" (click)="logout()">
+                    <i data-feather="log-out"></i><span class="ms-2">Sign Out</span>
+                </button>
+        </div>
+    </div>
+    
+    <div class="main px-lg-4 px-md-4">
+        <div class="header">
+          <nav class="navbar py-4">
+            <div class="container-xxl">
+              <!-- Header rightbar icon -->
+              <div class="h-right d-flex align-items-center mr-5 mr-lg-0 order-1">
+                <!-- Notifications Dropdown -->
+                <div class="dropdown notifications zindex-popover">
+                  <a class="nav-link dropdown-toggle pulse" href="#" role="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-bell fs-5"></i>
+                    <span class="pulse-ring"></span>
+                  </a>
+                  <div id="NotificationsDiv" class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-sm-end p-0 m-0">
+                    <div class="card border-0 w380">
+                      <div class="card-header border-0 p-3">
+                        <h5 class="mb-0 font-weight-light d-flex justify-content-between">
+                          <span>Notifications</span>
+                          <span class="badge text-white">14</span>
+                        </h5>
+                      </div>
+                      <div class="tab-content card-body">
+                        <div class="tab-pane fade show active">
+                          <ul class="list-unstyled list mb-0">
+                            <li class="py-2 mb-1 border-bottom">
+                              <a href="javascript:void(0);" class="d-flex">
+                                <img class="avatar rounded-circle" src="assets/img/default-avatar.png" alt="avatar">
+                                <div class="flex-fill ms-2">
+                                  <p class="d-flex justify-content-between mb-0">
+                                    <span class="font-weight-bold">Molly Cornish</span>
+                                    <small>2MIN</small>
+                                  </p>
+                                  <span>Added 2021-02-19 e-Learn links_no_expiration_report.csv
+                                    <span class="badge bg-success">Review</span>
+                                  </span>
+                                </div>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <a class="card-footer text-center border-top-0" href="#">View all notifications</a>
+                    </div>
+                  </div>
+                </div>
+      
+                <!-- Profile Dropdown -->
+                <div class="dropdown profile zindex-popover ms-3">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    <span class="avatar rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                      {{ userName ? (userName.charAt(0) | uppercase) : 'U' }}
+                    </span>
+                  </a>
+                  <div class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-sm-end p-0 m-0">
+                    <div class="card border-0">
+                      <div class="card-header border-0 p-3">
+                        <div class="d-flex align-items-center">
+                          <span class="avatar rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                            {{ userName ? (userName.charAt(0) | uppercase) : 'U' }}
+                          </span>
+                          <div>
+                            <h5 class="mb-0">{{ userName || 'User' }}</h5>
+                            <small>{{ userRole || 'Role' }}</small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body p-0">
+                        <ul class="list-unstyled list mb-0">
+                          <li>
+                            <a routerLink="/profile" class="dropdown-item py-2">My Profile</a>
+                          </li>
+                          <li>
+                            <a routerLink="/settings" class="dropdown-item py-2">Settings</a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);" class="dropdown-item py-2" (click)="logout()">Sign Out</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    
+    <main class="page-content">
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+
+    
+</body>
